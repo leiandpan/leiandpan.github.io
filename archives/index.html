@@ -1,103 +1,310 @@
-<!DOCTYPE html>
-<!--layout.ejs的意思是共用的布局文件-->
-<!--partial()是个函数，来包含其他文件，使得我们能够更好的组织代码。-->
-<html>
-  <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="renderer" content="webkit">
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title>Lei and Pig Pan</title>
-
-<!--Baidu Tongji-->
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-    </script>
-     
-
-
   
 <link rel="stylesheet" href="/css/style.css">
 
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet"  media="print" onload="this.media='all'">
+
+  <!--百度统计-->
+
 <meta name="generator" content="Hexo 5.4.0"></head>
-  <body>
-    <div class="container">
-      <header class="header">
-  <div class="blog-title">
-    <a href="/" class="logo">Lei and Pig Pan</a>
-  </div>
-  <nav class="navbar">
-    <ul class="menu">
-      
-    </ul>
-  </nav>
-</header>
 
-      <main class="main">
-      <section class="date">
-  <div class="date">
-      <h2>Lei and Pan have been together for</h2>
-      <div class="timer">
-      <b id="d"></b> Days <b id="h"></b> Hours <b id="m"></b> Minutes <b id="s"></b> Seconds
+
+<body class="main">
+  <div class="clouds">
+    <div id="wrapper">
+      <div id="innerWrapper">
+        <div id="pageTop"></div>
+        <div id="pageHeader">
+          <div id="anniversary">
+            <span>18576</span>
+          </div>
+          <ul id="pageNav">
+            
+            <li><a title="🚩黑石博客" target="_blank" rel="noopener" href="https://www.heson10.com/">🚩黑石博客</a></li>
+            
+            <li><a title="💞情侣哔哔" target="_blank" rel="noopener" href="https://www.heson10.com/lovebb">💞情侣哔哔</a></li>
+            
+          </ul>
+        </div>
+        <div id="pageContent">
+          
+
+          <div id="articleMale">
+
+            <main id="app">
+
+              <div class="timenode" v-for="item in contents" v-cloak>
+                <div class="meta">
+                  <p><time v-bind:datetime="item.attributes.time">{{item.attributes.time}}</time></p>
+                </div>
+                <div class="body">
+                  <p v-html='item.attributes.content'></p>
+                </div>
+              </div>
+              <div class="load-ctn">
+                <a class="btn lv" v-on:click="loadMore1" v-if="contents" v-cloak>再翻翻</a>
+                <p class="tip" v-else>别急，加载呢</p>
+                </div>
+              <p class="tip">共计发送 {{count}} 条说说</p>
+            </main>
+
+
+
+
+
+
+
+          </div>
+
+          <div id="articleFemale">
+
+            <main id="app2">
+
+              <div class="timenode" v-for="item in contents" v-cloak>
+                <div class="meta">
+                  <p><time v-bind:datetime="item.attributes.time">{{item.attributes.time}}</time></p>
+                </div>
+                <div class="body">
+                  <p v-html='item.attributes.content'></p>
+                </div>
+              </div>
+              <div class="load-ctn">
+                <a class="btn lv" v-on:click="loadMore2" v-if="contents" v-cloak>再翻翻</a>
+                <p class="tip" v-else>别急，加载呢</p>
+                </div>
+              <p class="tip">共计发送 {{count}} 条说说</p>
+            </main>
+
+          </div>
+          <div class="clear"></div>
+          <div id="footer" class="footer">
+
+    <p align="center"><strong>COPY RIHGT&copy; 2020</strong> | Themes:<strong
+            style="color:#94A4FF">Sweet</strong>-<strong style="color:#FFB296">Clouds</strong> By <a
+            href="https://www.heson10.com" target="_blank"><strong>Heson</strong></a></p>
+
+    <p align="center"> <a target="_blank" rel="noopener" href="https://love.heson10.com" title="情侣微博">
+
+            <strong>情侣微博1.0</strong> 持续优化中
+
+        </a> Proudly By <a href="http://hexo.io" target="_blank">Hexo</a></p>
+    
+<script src="/js/jquery.js"></script>
+
+    
+<script src="/js/all.js"></script>
+
+    <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.5.3/dist/av-min.js"></script>
+    <script>
+
+        var {
+            Query
+        } = AV;
+        AV.init({
+            appId: "0KzOX4vC7Jsk6vzUGNeEiUaI-gzGzoHsz",
+            appKey: "HwCiWuxfpvKiLm4teCUgTIba",
+            serverURLs: 'https://bbapi.heson10.com'
+        });
+
+        var query = new AV.Query('content');
+
+
+
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                page: 0,
+                count: 0,
+                contents: []
+            },
+            methods: {
+                loadMore1: function (event) {
+
+                    var {
+                        Query
+                    } = AV;
+                    AV.init({
+                        appId: "0KzOX4vC7Jsk6vzUGNeEiUaI-gzGzoHsz",
+                        appKey: "HwCiWuxfpvKiLm4teCUgTIba",
+                        serverURLs: 'https://bbapi.heson10.com'
+                    });
+
+                    var query = new AV.Query('content');
+                    getData1(++this.page);
+                }
+            }
+        })
+
+        var app2 = new Vue({
+            el: '#app2',
+            data: {
+                page: 0,
+                count: 0,
+                contents: []
+            },
+            methods: {
+                loadMore2: function (event) {
+                    var {
+                        Query
+                    } = AV;
+                    AV.init({
+                        appId: "3ESXk94AEyyC1UiW314gQQz1-gzGzoHsz",
+                        appKey: "x76rfLe86pJxt2Tlzs3a67q6",
+                        serverURLs: 'https://xfbb.heson10.com'
+                    });
+
+                    var query2 = new AV.Query('content');
+
+
+
+
+
+
+                    getData2(++this.page);
+                }
+            }
+        })
+        query.count().then(function (count) {
+            app.count = count;
+        }, function (error) { });
+
+        getData1(0);
+
+        var {
+            Query
+        } = AV;
+        AV.init({
+            appId: "3ESXk94AEyyC1UiW314gQQz1-gzGzoHsz",
+            appKey: "x76rfLe86pJxt2Tlzs3a67q6",
+            serverURLs: 'https://xfbb.heson10.com'
+        });
+
+
+        var query2 = new AV.Query('content');
+
+        query2.count().then(function (count) {
+            app2.count = count;
+        }, function (error) { });
+
+        getData2(0);
+
+        function urlToLink(str) {
+            // var re = /(http|ftp|https):\/\/[\w-]+(.[\w-]+)+([\w-.,@?^=%&:/~+#]*[\w-\@?^=%&/~+#])?/g; 
+            var re = /\bhttps?:\/\/(?!\S+(?:jpe?g|png|bmp|gif|webp|gif))\S+/g;
+            var re_forpic = /\bhttps?:\/\/.*?(\.gif|\.jpeg|\.png|\.jpg|\.bmp|\.webp)/g;
+            var re_forpic_vx = /^http:\/\/mmbiz\.qpic\.cn[^\s]*/g;
+            str = str.replace(re, function (website) {
+                return "<a href='" + website + "' target='_blank'> <i class='iconfont icon-lianjie-copy'></i>链接 </a>";
+            });
+            str = str.replace(re_forpic, function (imgurl) {
+                return "<img src='" + imgurl + "'  /> ";
+            });
+            str = str.replace(re_forpic_vx, function (imgurl) {
+                return "<img src='" + imgurl + "'  /> ";
+            });
+            return str;
+        };
+
+        //男生获取哔哔
+        function getData1(page = 0) {
+            query.descending('createdAt').skip(page * 10).limit(10).find().then(function (results) {
+                if (results.length == 0) {
+                    alert('之前没发表过说说了')
+                } else {
+                    let resC = results;
+                    reqData = false;
+                    resC.forEach((i) => {
+                        let d = new Date(i.createdAt);
+                        datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+                        i.attributes.time = datetime;//☆友好地显示时间改为 i.attributes.time = timeago(d);
+                        i.attributes.content = urlToLink(i.attributes.content);
+                        app.contents.push(i);
+                    })
+                }
+
+            }, function (error) { });
+        }
+
+
+        //女生获取哔哔
+        function getData2(page = 0) {
+            query2.descending('createdAt').skip(page * 10).limit(10).find().then(function (results) {
+                if (results.length == 0) {
+                    alert('之前没发表过哔哔了')
+                } else {
+                    let resC = results;
+                    reqData = false;
+                    resC.forEach((i) => {
+                        let d = new Date(i.createdAt);
+                        datetime = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+                        i.attributes.time = datetime; //☆友好地显示时间改为 i.attributes.time = timeago(d);
+                        i.attributes.content = urlToLink(i.attributes.content);
+                        app2.contents.push(i);
+                    })
+                }
+
+            }, function (error) { });
+        }
+
+        //友好地显示时间,按需修改上面标记☆的代码
+        function timeago(dateTimeStamp) {
+
+            var minute = 1000 * 60;
+            var hour = minute * 60;
+            var day = hour * 24;
+            var halfamonth = day * 15;
+            var month = day * 30;
+
+            var now = new Date().getTime();
+            var diffValue = now - dateTimeStamp;
+
+            if (diffValue < 0) {
+                //非法操作
+                //alert("结束日期不能小于开始日期！");
+            }
+
+            var monthC = diffValue / month;
+            var weekC = diffValue / (7 * day);
+            var dayC = diffValue / day;
+            var dayR = diffValue / hour % 24;
+            var hourC = diffValue / hour;
+            var hourR = diffValue / minute % 60;
+            var minC = diffValue / minute;
+            var minR = diffValue / 1000 % 60;
+            if (monthC >= 1) {
+                result = getLocalTime(dateTimeStamp / 1000);
+            } else if (weekC >= 1) {
+                result = parseInt(weekC) + "周前";
+            } else if (dayC >= 1) {
+                result = parseInt(dayC) + "天" + parseInt(dayR) + "小时前";
+            } else if (hourC >= 1) {
+                result = parseInt(hourC) + "小时" + parseInt(hourR) + "分钟前";
+            } else if (minC >= 1) {
+                result = parseInt(minC) + "分钟" + parseInt(minR) + "秒前";
+            } else result = "刚刚发表";
+            return result;
+        }
+
+        function getLocalTime(nS) {
+            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
+        }
+
+    </script>
+
+
+
+</div>
+        </div>
       </div>
-      <div class="song">
-          <!--页面底部歌词-->
-          <!-- require APlayer -->
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-          <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-          <!-- require MetingJS -->
-          <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
-          <meting-js 
-          server="netease" 
-          type="playlist" 
-          id="2042070338" 
-          fixed="true"
-
-          autoplay="false" 
-          order="list" 
-          loop="all"></meting-js>
-      </div>
-  </div>
-
-<!--计时器js-->
-      <script>
-        function timer() {
-        window.setTimeout("timer()", 1000);
-        var start = new Date("2018-08-02 21:02:00");
-        var t = new Date().getTime() - start;
-        var h = ~~(t / 1000 / 60 / 60 % 24);
-        if (h < 10) {h = "0" + h;}
-        var m = ~~(t / 1000 / 60 % 60);
-        if (m < 10) { m = "0" + m;}
-        var s = ~~(t / 1000 % 60);
-       if (s < 10) {s = "0" + s;}
-        document.getElementById('d').innerHTML = ~~(t / 1000 / 60 / 60 / 24);
-       document.getElementById('h').innerHTML = h;
-       document.getElementById('m').innerHTML = m;
-       document.getElementById('s').innerHTML = s;}
-        timer();
-      </script> 
-<!--END：计时器js-->
-
-<!--鼠标点击显示爱心-->
-<script src="https://cdn.jsdelivr.net/gh/wallleap/cdn/js/love.js"></script>
-</section>
-      </main>
-
-      
-        <script type="text/javascript" color="177, 122, 125" opacity="2" 
-            zIndex="-1" count="200" 
-            src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
-        </script>
-      
-
     </div>
-
-  </body>
+  </div>
+</body>
 </html>
-
